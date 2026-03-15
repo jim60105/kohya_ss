@@ -1259,7 +1259,12 @@ def train_model(
         extra_accelerate_launch_args=extra_accelerate_launch_args,
     )
 
-    if sdxl:
+    # Detect anima training by checking for --qwen3 in additional_parameters
+    is_anima = "--qwen3" in (additional_parameters or "")
+
+    if is_anima:
+        run_cmd.append(rf"{scriptdir}/sd-scripts/anima_train_network.py")
+    elif sdxl:
         run_cmd.append(rf"{scriptdir}/sd-scripts/sdxl_train_network.py")
     elif flux1_checkbox:
         run_cmd.append(rf"{scriptdir}/sd-scripts/flux_train_network.py")

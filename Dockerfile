@@ -17,6 +17,9 @@ WORKDIR /tmp
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 
+# Taiwan mirror
+RUN sed -i 's|deb.debian.org/debian|mirror.twds.com.tw/debian|g' /etc/apt/sources.list.d/debian.sources
+
 # Install CUDA partially
 # https://docs.nvidia.com/cuda/cuda-installation-guide-linux/#debian
 # Installing the complete CUDA Toolkit system-wide usually adds around 8GB to the image size.
@@ -75,10 +78,6 @@ RUN --mount=type=cache,id=uv-$TARGETARCH$TARGETVARIANT,sharing=locked,target=/ro
     uv pip install --no-deps \
     # torch (1.0GiB)
     torch==2.7.0+cu128 \ 
-    # triton (149.3MiB)
-    triton>=3.1.0 \
-    # tensorflow (615.0MiB)
-    tensorflow>=2.16.1 \
     # onnxruntime-gpu (215.7MiB)
     onnxruntime-gpu==1.19.2
 
