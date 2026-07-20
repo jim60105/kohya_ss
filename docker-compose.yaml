@@ -57,7 +57,7 @@ services:
       TZ: Asia/Taipei
     volumes:
       - ./dataset/logs:/app/logs
-    command: tensorboard --logdir=/app/logs --bind_all
+    command: /bin/bash -c "pip install tensorboard && tensorboard --logdir=/app/logs --bind_all"
     deploy:
       resources:
         reservations:
