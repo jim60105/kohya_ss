@@ -3,6 +3,8 @@ services:
     container_name: kohya-ss-gui
     image: localhost/kohya_ss:hina
     user: 1000:0
+    logging:
+      driver: k8s-file
     build:
       context: .
       args:
