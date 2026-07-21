@@ -83,9 +83,9 @@ RUN --mount=type=cache,id=uv-$TARGETARCH$TARGETVARIANT,sharing=locked,target=/ro
 
 # Install dependencies
 RUN --mount=type=cache,id=uv-$TARGETARCH$TARGETVARIANT,sharing=locked,target=/root/.cache/uv \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    --mount=type=bind,source=sd-scripts,target=sd-scripts,rw \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml,relabel=shared \
+    --mount=type=bind,source=uv.lock,target=uv.lock,relabel=shared \
+    --mount=type=bind,source=sd-scripts,target=sd-scripts,rw,relabel=shared \
     uv sync --frozen --no-dev --no-install-project --no-editable
 
 # Replace pillow with pillow-simd (Only for x86)
